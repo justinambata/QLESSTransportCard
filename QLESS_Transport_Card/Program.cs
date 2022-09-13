@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Business.QLESS_Transport_Card.Models.IdentificationCard.Factories;
 using Business.QLESS_Transport_Card.Models.TransportCard.Factories;
 
@@ -8,22 +9,35 @@ namespace QLESS_Transport_Card
     {
         static void Main(string[] args)
         {
+            RunDelegatesSamples();
+            RunSynchronousSamples();
+            RunAsynchronousSamples();
+            RunQLessTransportCard();
+        }
+
+        private static void RunQLessTransportCard()
+        {
             Console.WriteLine("QLESS Transport Card");
 
             #region Sections A & B Part 1: Purchasing of transport card
+
             // Sections A & B Part 1: Purchasing of transport card
             Console.WriteLine("*** Sections A & B Part 1: Purchase");
             var standard = new StandardTransportCardFactory().CreateTransportCard();
-            var discountedSeniorCitizen = new DiscountedTransportCardFactory().CreateTransportCard(new SeniorCitizenIdFactory(), "12-3456-7890");
-            var discountedPWD = new DiscountedTransportCardFactory().CreateTransportCard(new PersonWithDisabilityIdFactory(), "1234-5678-90ab");
-            
+            var discountedSeniorCitizen =
+                new DiscountedTransportCardFactory().CreateTransportCard(new SeniorCitizenIdFactory(), "12-3456-7890");
+            var discountedPWD =
+                new DiscountedTransportCardFactory().CreateTransportCard(new PersonWithDisabilityIdFactory(), "1234-5678-90ab");
+
             // Output: After purchasing transport card
             standard.PrintContent();
             discountedSeniorCitizen.PrintContent();
             discountedPWD.PrintContent();
+
             #endregion
 
             #region Sections A & B Part 2 Exit turnstile scenario
+
             // Sections A & B Part 2: Exit turnstile scenario
             Console.WriteLine("*** Sections A & B Part 2: Exit turnstile scenario");
 
@@ -36,10 +50,12 @@ namespace QLESS_Transport_Card
             // Output: After exiting turnstile
             standard.PrintContent();
             discountedSeniorCitizen.PrintContent();
-            discountedPWD.PrintContent(); 
+            discountedPWD.PrintContent();
+
             #endregion
-            
+
             #region Section C: Discount Definitions
+
             // Section C: Discount Definitions
             Console.WriteLine("*** Section C: Discount Definitions");
 
@@ -81,10 +97,12 @@ namespace QLESS_Transport_Card
             // I/O 8 (20%)
             discountedPWD.TapIn(DateTime.UtcNow.AddDays(1), "station 5");
             discountedPWD.TapOut(DateTime.UtcNow.AddDays(1), "station 1");
-            discountedPWD.PrintContent(); 
+            discountedPWD.PrintContent();
+
             #endregion
-            
+
             #region Section D: Reloading
+
             // Section D: Reloading
             Console.WriteLine("*** Section D: Reloading");
             standard.PrintContent();
@@ -102,8 +120,28 @@ namespace QLESS_Transport_Card
             standard.Reload(DateTime.UtcNow, 1000, 1000); // 575.00 change; end balance = 10,000.00
             standard.PrintContent();
             standard.Reload(DateTime.UtcNow, 100, 500); // 500.00 change; end balance = 10,000.00
-            standard.PrintContent(); 
+            standard.PrintContent();
+
             #endregion
+        }
+
+        private static void RunAsynchronousSamples()
+        {
+            Task.Run(() => new AsynchronousApp().Run()).Wait();
+            Task.Run(() => new SimpleAsyncApp().Run()).Wait();
+        }
+
+        private static void RunDelegatesSamples()
+        {
+            new DelegateApp().Run();
+            new EventDelegateApp().Run();
+        }
+
+        private static void RunSynchronousSamples()
+        {
+            new SynchronousApp().Run();
         }
     }
 }
+
+
