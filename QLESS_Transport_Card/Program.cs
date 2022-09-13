@@ -134,7 +134,8 @@ namespace QLESS_Transport_Card
 
         private static void RunDeadlockSamples()
         {
-            new DeadlockApp().Run();
+            //new DeadlockApp().Run();
+            new NotADeadlockApp().Run();
         }
 
         private static void RunDelegatesSamples()
