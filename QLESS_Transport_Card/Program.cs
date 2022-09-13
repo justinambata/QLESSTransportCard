@@ -9,10 +9,11 @@ namespace QLESS_Transport_Card
     {
         static void Main(string[] args)
         {
-            RunDelegatesSamples();
-            RunSynchronousSamples();
-            RunAsynchronousSamples();
-            RunQLessTransportCard();
+            //RunQLessTransportCard();
+            //RunDelegatesSamples();
+            //RunSynchronousSamples();
+            //RunAsynchronousSamples();
+            RunDeadlockSamples();
         }
 
         private static void RunQLessTransportCard()
@@ -129,6 +130,11 @@ namespace QLESS_Transport_Card
         {
             Task.Run(() => new AsynchronousApp().Run()).Wait();
             Task.Run(() => new SimpleAsyncApp().Run()).Wait();
+        }
+
+        private static void RunDeadlockSamples()
+        {
+            new DeadlockApp().Run();
         }
 
         private static void RunDelegatesSamples()
