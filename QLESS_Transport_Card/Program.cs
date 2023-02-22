@@ -7,6 +7,7 @@ namespace QLESS_Transport_Card
     class Program
     {
         static void Main(string[] args)
+        {
             Console.WriteLine("QLESS Transport Card");
 
             #region Sections A & B Part 1: Purchasing of transport card
